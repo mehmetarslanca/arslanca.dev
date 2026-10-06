@@ -1,0 +1,11 @@
+---
+import { network } from '../data/network';
+interface Props { id: string }
+const { id } = Astro.props;
+const entity = network.find((item) => item.id === id)!;
+---
+<div class:list={['network-node', `node-${id}`, `level-${entity.type.toLowerCase()}`]} data-node={id} data-stage={entity.stage}>
+  <span class="label entity-type">{entity.type}</span>
+  {entity.href ? <a href={entity.href} rel={entity.href.startsWith('https:') ? 'noopener noreferrer' : undefined}>{entity.name}<span class="node-arrow" aria-hidden="true">{entity.href.startsWith('https:') ? '↗' : '→'}</span></a> : <span class="node-name">{entity.name}</span>}
+  <p>{entity.caption}</p>
+</div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arslanca.dev/sitemap-index.xml

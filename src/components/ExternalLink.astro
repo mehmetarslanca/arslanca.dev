@@ -1,0 +1,7 @@
+---
+interface Props { href: string; class?: string; arrow?: boolean }
+const { href, class: className, arrow = true } = Astro.props;
+---
+<a href={href} class={className} rel={href.startsWith('https:') ? 'noopener noreferrer' : undefined}>
+  <slot />{arrow && <span class="arrow" aria-hidden="true">↗</span>}
+</a>

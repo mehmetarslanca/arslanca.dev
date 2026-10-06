@@ -1,0 +1,6 @@
+---
+interface Props { ownership: string; status: string }
+const { ownership, status } = Astro.props;
+---
+<p class="status label">{ownership}<span aria-hidden="true">·</span>{status}</p>
+<style>.status { display: flex; align-items: center; gap: .65rem; margin: 0; } .status span { color: var(--accent-soft); }</style>

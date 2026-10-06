@@ -1,0 +1,30 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  statement: string;
+  image: string;
+  focalPoint?: string;
+}
+const { id, label, title, statement, image, focalPoint = 'center' } = Astro.props;
+const headingId = `${id}-heading`;
+---
+
+<header id={id} class="page-hero" style={`--page-hero-focal:${focalPoint}`} aria-labelledby={headingId} data-section-anchor>
+  <div class="page-hero-media" aria-hidden="true"><img src={image} alt="" width="1672" height="941" fetchpriority="high" decoding="async" /></div>
+  <div class="page-hero-shade" aria-hidden="true"></div>
+  <div class="container page-hero-content"><p class="label">{label}</p><h1 id={headingId}>{title}</h1><p class="page-hero-statement">{statement}</p></div>
+</header>
+
+<style>
+  .page-hero{position:relative;isolation:isolate;min-height:clamp(34rem,72svh,49rem);display:flex;align-items:end;overflow:clip;color:#e7e3de;--text-muted:#c8c1bb}
+  .page-hero-media,.page-hero-shade{position:absolute;inset:0;z-index:-2}.page-hero-media img{width:100%;height:100%;object-fit:cover;object-position:var(--page-hero-focal);transform:scale(1.012)}
+  .page-hero-shade{z-index:-1;background:linear-gradient(90deg,rgb(7 7 7/.9) 0%,rgb(7 7 7/.68) 42%,rgb(7 7 7/.16) 78%),linear-gradient(0deg,rgb(7 7 7/.76) 0%,transparent 52%)}
+  .page-hero-content{padding-block:clamp(3rem,7vh,5.5rem)}.page-hero-content h1{max-width:15ch;margin:1rem 0 1.5rem;font-size:clamp(3.5rem,7.2vw,8rem);line-height:.9}.page-hero-statement{max-width:49ch;margin:0;color:var(--text-muted);font-size:1.0625rem}
+  :global(.js) .page-hero-media img{animation:page-hero-settle 1100ms cubic-bezier(.22,1,.36,1) both}:global(.js) .page-hero-content{animation:page-hero-rise 780ms 120ms cubic-bezier(.22,1,.36,1) both}
+  @keyframes page-hero-settle{from{opacity:.68;transform:scale(1.04)}to{opacity:1;transform:scale(1.012)}}@keyframes page-hero-rise{from{opacity:0;transform:translate3d(0,26px,0)}to{opacity:1;transform:none}}
+  @media(max-width:900px){.page-hero{min-height:clamp(31rem,68svh,42rem)}.page-hero-content h1{font-size:clamp(3.25rem,9vw,5.5rem)}.page-hero-shade{background:linear-gradient(90deg,rgb(7 7 7/.9),rgb(7 7 7/.48)),linear-gradient(0deg,rgb(7 7 7/.8),transparent 60%)}}
+  @media(max-width:600px){.page-hero{min-height:68svh;--page-hero-focal:61% center!important}.page-hero-content{padding-block:2.75rem}.page-hero-content h1{max-width:12ch;font-size:clamp(2.75rem,13vw,3.5rem);line-height:.94}.page-hero-statement{max-width:35ch;font-size:.95rem}.page-hero-shade{background:linear-gradient(90deg,rgb(7 7 7/.92),rgb(7 7 7/.52)),linear-gradient(0deg,rgb(7 7 7/.84),transparent 64%)}}
+  @media(prefers-reduced-motion:reduce){:global(.js) .page-hero-media img,:global(.js) .page-hero-content{animation:none}}
+</style>

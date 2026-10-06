@@ -1,0 +1,21 @@
+---
+interface Props { visual?: { src: string; alt: string; width: number; height: number } }
+const { visual } = Astro.props;
+---
+{visual ? <figure class="product-visual"><img src={visual.src} alt={visual.alt} width={visual.width} height={visual.height} loading="lazy" decoding="async" /></figure> :
+  <figure class="product-visual reserved">
+    <div class="visual-top label"><span>EDIP / Personal product</span><span aria-hidden="true">+</span></div>
+    <span class="wordmark" aria-hidden="true">EDIP<span>.</span></span>
+    <figcaption class="visual-bottom"><span class="label">Local-first · AI-oriented editing</span><span class="label muted">Product visual reserved</span></figcaption>
+  </figure>
+}
+<style>
+  .product-visual { margin: 0; aspect-ratio: 16 / 9; width: 100%; overflow: clip; background: var(--bg-elevated); }
+  img { width: 100%; height: 100%; object-fit: cover; }
+  .reserved { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.25rem, 3vw, 2.5rem); }
+  .visual-top { display: flex; justify-content: space-between; gap: 1rem; }
+  .wordmark { font-family: var(--font-display); font-weight: 500; font-size: clamp(4rem, 11vw, 10rem); letter-spacing: -.065em; line-height: 1; align-self: center; }
+  .wordmark span { color: var(--accent-soft); }
+  .visual-bottom { display: flex; gap: 1rem; justify-content: space-between; }
+  @media (max-width: 600px) { .visual-bottom { flex-direction: column; gap: .5rem; } .wordmark { font-size: 5rem; } }
+</style>

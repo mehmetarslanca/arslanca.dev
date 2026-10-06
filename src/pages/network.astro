@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionRail from '../components/SectionRail.astro';
+import PageHero from '../components/PageHero.astro';
+import NetworkGraph from '../components/NetworkGraph.astro';
+import ExternalLink from '../components/ExternalLink.astro';
+const rail=[{id:'network-intro',title:'Intro'},{id:'network',title:'Network Map'},{id:'devonair',title:'Devonair'},{id:'people',title:'People'},{id:'relationships',title:'Relationships'}];
+---
+<BaseLayout title="Network | Mehmet Arslanca" description="The people, organizations, and product relationships around Mehmet Arslanca, Devonair, Ebiren, and Brightspire.">
+  <SectionRail sections={rail}/>
+  <PageHero id="network-intro" label="Network" title="I build independently, and with people I trust." statement="Ebiren is the umbrella organization. Devonair is its software, products, and systems side; Brightspire is its game-development side. Mehmet and Murat build within Devonair." image="/images/page-heroes/network.png" />
+  <NetworkGraph/>
+  <section id="devonair" class="section container split" data-section-anchor><div data-scroll-reveal><p class="label">Devonair</p><h2>Software, products & systems.</h2></div><div data-scroll-reveal data-motion-lag=".04"><p>Devonair is where shared software and product work lives. It provides a clear home for collaboration without making independent products look jointly owned.</p><ExternalLink class="text-link" href="https://devonair.dev/">Visit Devonair</ExternalLink></div></section>
+  <section id="people" class="section container people" data-section-anchor><div data-scroll-reveal><p class="label">People</p><h2>Independent builders,<br/>shared responsibility.</h2></div><div class="people-grid"><article data-scroll-reveal><h3>Mehmet Arslanca</h3><p>Software engineer, independent builder, and Devonair collaborator. EDIP remains Mehmet’s personal product.</p><a class="text-link" href="/about/">About Mehmet <span class="arrow">→</span></a></article><article data-scroll-reveal data-motion-lag=".04"><h3>Murat Bahadır Kayıhan</h3><p>Collaborator and independent builder. Aelova and Ripple are Murat-led products now within Devonair.</p><ExternalLink class="text-link" href="https://kayihan.dev/">Visit Murat’s site</ExternalLink></article></div></section>
+  <section id="relationships" class="section container relationships" data-section-anchor><div data-scroll-reveal><p class="label">Project relationships</p><h2>The graph,<br/>in plain language.</h2></div><dl><div data-scroll-reveal><dt>EDIP</dt><dd>Mehmet personal</dd></div><div data-scroll-reveal><dt>IT’S SO OVER</dt><dd>Shared Devonair, Mehmet + Murat</dd></div><div data-scroll-reveal><dt>Aelova</dt><dd>Murat-led, now Devonair</dd></div><div data-scroll-reveal><dt>Ripple</dt><dd>Murat-led, now Devonair</dd></div></dl><a class="text-link" href="/products/">Explore the products <span class="arrow">→</span></a></section>
+</BaseLayout>
+<style>
+  .split,.people{display:grid;grid-template-columns:.8fr 1.2fr;gap:4rem 10rem}.split h2,.people h2,.relationships h2{font-size:clamp(3rem,7vw,7rem);line-height:.95}.split>div:last-child{max-width:55ch;color:var(--text-muted);align-self:end}.people-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}.people-grid h3{font-size:2rem}.people-grid p{color:var(--text-muted)}.relationships{display:grid;grid-template-columns:.75fr 1.25fr;gap:4rem 8rem}.relationships dl{margin:0}.relationships dl>div{display:grid;grid-template-columns:.6fr 1fr;gap:2rem;padding-block:1.25rem}.relationships dt{font-family:var(--font-display);font-size:1.5rem}.relationships dd{margin:0;color:var(--text-muted)}.relationships>a{grid-column:2;width:fit-content}@media(max-width:800px){.split,.people,.relationships{grid-template-columns:1fr}.people-grid{grid-template-columns:1fr}.relationships>a{grid-column:auto}}
+</style>

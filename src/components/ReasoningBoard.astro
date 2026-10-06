@@ -1,0 +1,101 @@
+---
+import { buildSequence } from '../data/site';
+
+const connections = [
+  'M34 14 H58 Q62 14 62 18 V21',
+  'M74 24 V31 Q74 35 70 35 H66',
+  'M60 39 H38 Q34 39 34 43 V46',
+  'M23 49 V56 Q23 60 27 60 H32',
+  'M38 64 H61 Q65 64 65 68 V70',
+  'M76 73 V80 Q76 84 72 84 H67',
+  'M60 88 H39',
+];
+---
+
+<section id="how-i-build-runway" class="reasoning-scroll light-band" data-reasoning data-section-anchor aria-labelledby="build-heading">
+  <div class="reasoning-sticky">
+    <div class="reasoning-board container">
+      <div class="board-meta label"><span>Reasoning board</span><span data-reasoning-counter>01 / 08</span></div>
+      <svg class="reasoning-connections" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {connections.map((path, index) => <path d={path} pathLength="1" style={`--connection-index: ${index + 1}`} />)}
+      </svg>
+      <ol class="reasoning-map">
+        {buildSequence.map((step, index) => (
+          <li class={`reasoning-step step-${index + 1}`} data-scroll-reveal data-motion-lag={String((index % 2) * .02)}>
+            <div class="reasoning-node">
+              <span class="label">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+            </div>
+            <p>{step.copy}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="board-note label">Problem → Evidence</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reasoning-scroll { position: relative; width: 100%; }
+  .reasoning-sticky { min-height: 100svh; padding-block: clamp(1.5rem, 3vh, 2.5rem); background-image: linear-gradient(rgb(17 16 15 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(17 16 15 / .045) 1px, transparent 1px); background-size: 32px 32px; }
+  .reasoning-board { position: relative; min-height: clamp(70rem, 90vw, 80rem); }
+  .board-meta { position: absolute; z-index: 3; inset: 0 var(--gutter) auto; display: flex; justify-content: space-between; color: var(--light-muted); }
+  .board-note { position: absolute; z-index: 3; inset: auto var(--gutter) 0 auto; margin: 0; color: var(--light-muted); }
+  .reasoning-map { position: absolute; z-index: 2; inset: clamp(5rem, 9vh, 7rem) var(--gutter) clamp(3rem, 6vh, 5rem); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); column-gap: clamp(5rem, 11vw, 11rem); row-gap: clamp(.5rem, 1.5vh, 1.25rem); list-style: none; margin: 0; padding: 0; }
+  .reasoning-step { min-width: 0; align-self: center; }
+  .reasoning-node { width: min(100%, 27rem); display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: .75rem; align-items: center; padding: .7rem .9rem; border: 1px solid rgb(97 90 85 / .32); background: rgb(229 224 218 / .88); }
+  .reasoning-node .label { color: var(--accent); }
+  .reasoning-node h3 { font-size: clamp(1.25rem, 2.1vw, 2rem); }
+  .reasoning-step > p { max-width: 48ch; margin: .75rem 0 0 3.4rem; color: var(--light-muted); font-size: clamp(.68rem, .82vw, .79rem); line-height: 1.48; }
+  .step-1 { grid-area: 1 / 1; align-self: start; margin-right: 9%; }
+  .step-2 { grid-area: 1 / 2; align-self: end; margin-left: 7%; }
+  .step-3 { grid-area: 2 / 2; align-self: start; margin-left: 13%; }
+  .step-4 { grid-area: 2 / 1; align-self: end; margin-right: 4%; }
+  .step-5 { grid-area: 3 / 1; align-self: start; margin-left: 8%; }
+  .step-6 { grid-area: 3 / 2; align-self: end; margin-right: 8%; }
+  .step-7 { grid-area: 4 / 2; align-self: start; margin-left: 10%; }
+  .step-8 { grid-area: 4 / 1; align-self: end; margin-right: 3%; }
+  .reasoning-connections { position: absolute; z-index: 1; inset: clamp(5rem, 9vh, 7rem) var(--gutter) clamp(3rem, 6vh, 5rem); width: calc(100% - (2 * var(--gutter))); height: calc(100% - clamp(8rem, 15vh, 12rem)); overflow: visible; pointer-events: none; }
+  .reasoning-connections path { fill: none; stroke: rgb(97 90 85 / .55); stroke-width: .1; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reasoning-enhanced] { background: transparent; }
+    [data-reasoning-motion] { height: 560svh; }
+    [data-reasoning-motion] .reasoning-sticky { position: sticky; top: 0; height: 100svh; min-height: 0; }
+    [data-reasoning-motion] .reasoning-board { height: 100%; min-height: 0; opacity: var(--how-scene-opacity, 0); transform: translate3d(0, var(--how-scene-y, 0px), 0); }
+    [data-reasoning-motion] .reasoning-step[data-motion-ready] { opacity: 1; transform: none; }
+    [data-reasoning-motion] .reasoning-node { opacity: var(--reasoning-node-opacity, 0); transform: translate3d(0, calc(((1 - var(--reasoning-node, 0)) * 18px) + var(--reasoning-drift, 0px)), 0); border-color: color-mix(in srgb, var(--accent) calc(var(--reasoning-active, 0) * 100%), rgb(97 90 85 / .32)); }
+    [data-reasoning-motion] .reasoning-step > p { opacity: var(--reasoning-copy-opacity, 0); transform: translate3d(0, calc(((1 - var(--reasoning-copy, 0)) * 12px) + var(--reasoning-drift, 0px)), 0); }
+    [data-reasoning-motion] .reasoning-connections path { stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--reasoning-connection, 0)); stroke: color-mix(in srgb, var(--accent) calc(var(--reasoning-connection-active, 0) * 100%), rgb(97 90 85 / .55)); }
+  }
+
+  @media (max-width: 900px), (max-height: 699px) {
+    .reasoning-sticky { min-height: 0; padding-block: 4rem; background-size: 44px 44px; }
+    .reasoning-board { min-height: 0; }
+    .board-meta { position: static; margin-bottom: 3rem; }
+    .board-note { position: static; text-align: right; margin-top: 2rem; }
+    .reasoning-connections { display: none; }
+    .reasoning-map { position: relative; inset: auto; display: flex; flex-direction: column; gap: 0; }
+    .reasoning-map::before { content: ''; position: absolute; inset: .75rem auto 2rem .8rem; border-left: 1px solid rgb(97 90 85 / .45); }
+    .reasoning-step { position: relative; width: calc(100% - 2rem); margin: 0 0 0 2rem; padding-bottom: 3.5rem; align-self: auto; }
+    .reasoning-step:nth-child(even) { margin-left: clamp(3rem, 9vw, 5rem); width: calc(100% - clamp(3rem, 9vw, 5rem)); }
+    .reasoning-step::before { content: ''; position: absolute; top: 1.25rem; right: calc(100% + .75rem); width: 1.25rem; border-top: 1px solid var(--accent); }
+    .reasoning-node { width: 100%; }
+    .reasoning-step > p { max-width: 58ch; font-size: .8rem; }
+  }
+
+  @media (max-width: 500px) {
+    .reasoning-sticky { padding-block: 3rem; }
+    .reasoning-step { width: calc(100% - 1.5rem); margin-left: 1.5rem; }
+    .reasoning-step:nth-child(even) { width: calc(100% - 2.25rem); margin-left: 2.25rem; }
+    .reasoning-node { grid-template-columns: 2rem minmax(0, 1fr); padding: .65rem .75rem; }
+    .reasoning-step > p { margin-left: 2.75rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reasoning-scroll { height: auto; background: var(--light-band); }
+    .reasoning-sticky { position: static; height: auto; }
+    .reasoning-node, .reasoning-step > p { opacity: 1; transform: none; }
+    .reasoning-connections path { stroke-dasharray: none; stroke-dashoffset: 0; }
+  }
+</style>

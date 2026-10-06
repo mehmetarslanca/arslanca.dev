@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate } from '../../lib/writing';
+const posts = await getPublishedPosts();
+---
+<BaseLayout title="Writing | Mehmet Arslanca" description="Writing by Mehmet Arslanca about product decisions, engineering, and the evidence behind the work.">
+  <div class="container writing-page"><header class="page-intro" data-scroll-reveal><p class="label">Notes & essays</p><h1>Writing</h1></header>
+    {posts.length === 0 ? <p class="empty" data-scroll-reveal>Nothing published here yet.</p> : <ul class="post-list">{posts.map((post) => <li data-scroll-reveal><time class="label" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><h2><a href={`/writing/${post.id}/`}>{post.data.title}<span class="arrow" aria-hidden="true">→</span></a></h2>{post.data.description && <p>{post.data.description}</p>}</li>)}</ul>}
+    <a href="/" class="text-link"><span aria-hidden="true">←</span> Back home</a>
+  </div>
+</BaseLayout>
+<style>
+  .writing-page { min-height: 65vh; padding-bottom: 5rem; } .page-intro { padding-bottom: 2rem; }
+  .empty { color: var(--text-muted); padding-block: 2rem 4rem; border-top: 1px solid var(--line); }
+  .post-list { list-style: none; padding: 0; margin: 0 0 3rem; } li { border-top: 1px solid var(--line); padding-block: 2rem; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); margin-block: 1rem; } h2 a { display: inline-block; padding-block: .25rem; }
+  li p { max-width: 60ch; color: var(--text-muted); }
+</style>

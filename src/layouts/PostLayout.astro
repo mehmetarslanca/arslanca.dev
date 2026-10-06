@@ -1,0 +1,20 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../lib/writing';
+interface Props { title: string; date: Date; description?: string }
+const { title, date, description } = Astro.props;
+---
+<BaseLayout title={`${title} | Mehmet Arslanca`} description={description ?? `${title}. Writing by Mehmet Arslanca.`} article published={date}>
+  <article class="container article">
+    <a class="text-link" href="/writing/"><span aria-hidden="true">←</span> All writing</a>
+    <header data-scroll-reveal><p class="label"><time datetime={date.toISOString()}>{formatDate(date)}</time></p><h1>{title}</h1>{description && <p class="article-description">{description}</p>}</header>
+    <div class="prose" data-scroll-reveal><slot /></div>
+    <a class="text-link article-back" href="/writing/">Back to writing <span aria-hidden="true">→</span></a>
+  </article>
+</BaseLayout>
+<style>
+  .article { max-width: 900px; padding-block: 3rem 5rem; }
+  header { margin-block: 4rem 3rem; } h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); overflow-wrap: anywhere; }
+  .article-description { color: var(--text-muted); margin-top: 1.5rem; font-size: 1.2rem; }
+  .article-back { margin-top: 4rem; }
+</style>

@@ -1,0 +1,19 @@
+---
+import { site } from '../data/site';
+import ExternalLink from './ExternalLink.astro';
+---
+<footer class="site-footer container">
+  <div data-scroll-reveal><a href="/" class="footer-name">{site.name}</a><p>{site.role}</p></div>
+  <div class="footer-links" data-scroll-reveal data-motion-lag="0.04">
+    <nav aria-label="Site index"><a href="/products/">Products</a><a href="/engineering/">Engineering</a><a href="/network/">Network</a><a href="/about/">About</a><a href="/writing/">Writing</a></nav>
+    <nav aria-label="Social and contact links">{site.socials.map((link) => <ExternalLink href={link.href}>{link.name}</ExternalLink>)}</nav>
+  </div>
+  <span class="label copyright">© {new Date().getUTCFullYear()} arslanca.dev</span>
+</footer>
+<style>
+  .site-footer { display: grid; grid-template-columns: 1fr auto; gap: 3rem; padding-block: 3.5rem 2rem; }
+  .footer-name { font-weight: 500; display: inline-flex; min-height: 44px; align-items: center; } p { color: var(--text-muted); margin: .3rem 0 0; font-size: .875rem; }
+  .footer-links { display: grid; gap: .4rem; justify-items: end; } nav { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; justify-content: flex-end; } nav a, nav :global(a) { min-height: 36px; display: inline-flex; align-items: center; font-size: .8rem; }
+  .copyright { grid-column: 1 / -1; }
+  @media (max-width: 760px) { .site-footer { grid-template-columns: 1fr; gap: 1.5rem; } .footer-links { justify-items: start; } nav { justify-content: flex-start; } }
+</style>

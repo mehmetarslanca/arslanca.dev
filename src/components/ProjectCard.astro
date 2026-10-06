@@ -1,0 +1,30 @@
+---
+import type { Project } from '../data/projects';
+import ProductVisual from './ProductVisual.astro';
+import StatusTag from './StatusTag.astro';
+import ExternalLink from './ExternalLink.astro';
+interface Props { project: Project }
+const { project } = Astro.props;
+const primary = project.slug === 'edip';
+---
+<article data-scroll-reveal data-motion-lag={primary ? '0.02' : '0.075'} class:list={['project', { primary, secondary: !primary }]}>
+  {primary && <a href={project.href} class="visual-link" aria-label="Read about EDIP"><ProductVisual visual={project.visual} /></a>}
+  <div class="project-info">
+    <StatusTag ownership={project.ownership} status={project.status} />
+    <h3>{project.name}</h3>
+    <p class="description">{project.description}</p>
+    <p class="attribution">{project.attribution}</p>
+    <ul class="tags" aria-label="Product attributes">{project.tags.map((tag) => <li>{tag}</li>)}</ul>
+    {project.href && (project.external ? <ExternalLink href={project.href} class="text-link">View on Devonair</ExternalLink> : <a href={project.href} class="text-link">Explore EDIP <span class="arrow" aria-hidden="true">→</span></a>)}
+  </div>
+</article>
+<style>
+  .project-info { padding-top: 1.75rem; }
+  h3 { font-size: clamp(2rem, 4vw, 3rem); margin: 1rem 0; }
+  .description { max-width: 42rem; color: var(--text); } .attribution { font-size: .8rem; color: var(--text-muted); margin-block: 1.25rem; }
+  .tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-size: .75rem; color: var(--text-muted); margin: 1.5rem 0; }
+  .secondary { border-top: 1px solid var(--line); margin-top: 6rem; align-self: start; padding-top: 1rem; }
+  .secondary h3 { max-width: 8ch; font-size: clamp(2.5rem, 4.5vw, 4.5rem); line-height: 1; margin-block: 2.5rem 2rem; }
+  .visual-link { display: block; } .visual-link:hover :global(.product-visual) { border-color: var(--accent-soft); }
+  @media (max-width: 760px) { .secondary { margin-top: 0; } .secondary h3 { max-width: none; margin-block: 1.5rem; } }
+</style>

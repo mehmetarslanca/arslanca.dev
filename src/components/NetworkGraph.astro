@@ -1,0 +1,131 @@
+---
+import NetworkNode from './NetworkNode.astro';
+import { networkConnections } from '../data/network';
+---
+<section id="network" class="network-scroll light-band" aria-labelledby="network-heading" data-network data-section-anchor>
+  <div class="network-sticky">
+    <div class="container network-composition">
+      <div class="network-intro">
+        <h2 id="network-heading">Network</h2>
+        <p>I build independently and as part of Devonair, the software side of Ebiren.</p>
+      </div>
+      <div class="network-graph">
+        <svg class="connections" aria-hidden="true">
+          {networkConnections.map((edge) => <path data-from={edge.from} data-to={edge.to} data-stage={edge.stage} data-layout={edge.layout} class:list={{ personal: edge.personal }} pathLength="1" />)}
+        </svg>
+        <ul class="network-tree" role="list" aria-label="People, organizations and product relationships">
+          <li><NetworkNode id="ebiren" />
+            <ul role="list">
+              <li><NetworkNode id="devonair" />
+                <ul role="list">
+                  <li><NetworkNode id="mehmet" />
+                    <ul class="personal-branch" role="list"><li><NetworkNode id="edip" /></li></ul>
+                  </li>
+                  <li><NetworkNode id="murat" />
+                    <ul role="list"><li><NetworkNode id="aelova" /></li><li><NetworkNode id="ripple" /></li></ul>
+                  </li>
+                  <li><NetworkNode id="over" /></li>
+                </ul>
+              </li>
+              <li><NetworkNode id="brightspire" /></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <p class="network-key label"><span aria-hidden="true"></span> Dashed branch: Mehmet’s personal work</p>
+    </div>
+  </div>
+</section>
+<style is:global>
+  .network-scroll { width: 100%; position: relative; }
+  .network-sticky { min-height: 100svh; display: flex; align-items: center; padding-block: clamp(2rem, 5vh, 4rem); }
+  .network-composition { width: 100%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .network-scroll { background: transparent; }
+    .js .network-composition { opacity: var(--network-scene-opacity, 1); transform: translate3d(0, var(--network-scene-y, 0px), 0); }
+    html.js:has(.network-scroll:focus-within) { --surface-light-progress: 1 !important; }
+  }
+  .network-intro { display: flex; align-items: start; justify-content: space-between; gap: 2rem; margin-bottom: clamp(1.5rem, 4vh, 3rem); }
+  .network-intro h2 { font-size: 2rem; }
+  .network-intro p { max-width: 38ch; margin: 0; font-size: .875rem; color: var(--light-muted); }
+  .network-graph { position: relative; }
+  .network-tree, .network-tree ul { list-style: none; margin: 0; padding: 0; }
+  /* A real nested tree is the default, including if the script fails to load. */
+  .network-tree ul { margin-left: 1.5rem; padding-left: 1.5rem; border-left: 1px solid #a69891; }
+  .network-tree .personal-branch { border-left-style: dashed; border-color: var(--accent); }
+  .network-node { width: fit-content; max-width: 100%; padding-block: .5rem; }
+  .network-node .entity-type { display: block; font-size: .625rem; margin-bottom: .2rem; }
+  .network-node a, .network-node .node-name { font-family: var(--font-display); font-weight: 500; letter-spacing: -.025em; line-height: 1.15; display: flex; align-items: center; min-height: 44px; font-size: 1.3rem; }
+  .network-node a { width: fit-content; gap: .5rem; text-decoration: underline; text-decoration-color: #b8aaa3; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+  .network-node a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+  .network-node .node-arrow { font-family: var(--font-body); font-size: .75rem; text-decoration: none; }
+  .network-node p { color: var(--light-muted); font-size: .75rem; line-height: 1.5; margin: .15rem 0 0; }
+  .network-node.node-ebiren .node-name { font-size: clamp(2rem, 3vw, 3rem); }
+  .node-edip p { color: var(--accent); }
+  .connections { display: none; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .connections path { fill: none; stroke: var(--accent); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+  .connections path.personal { stroke-dasharray: .025 .018; }
+  .network-key { display: flex; align-items: center; gap: .75rem; margin: 1.5rem 0 0; font-size: .625rem; }
+  .network-key span { width: 2rem; border-top: 1px dashed var(--accent); }
+  /* Geometry is enhanced only after the SVG paths have been measured. */
+  [data-network-layout] .connections { display: block; }
+  [data-network-layout] .network-tree ul { border: 0; }
+  [data-network-layout='desktop'] .network-tree { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); row-gap: clamp(2rem, 5vh, 4rem); }
+  [data-network-layout='desktop'] .network-tree :is(ul, li) { display: contents; }
+  [data-network-layout='desktop'] .network-node { width: 100%; padding: 0 .5rem; align-self: start; text-align: center; }
+  [data-network-layout='desktop'] .network-node a { margin-inline: auto; }
+  [data-network-layout='desktop'] .network-node .node-name { justify-content: center; }
+  [data-network-layout='desktop'] .node-ebiren { grid-area: 1 / 5 / 2 / 9; text-align: center; }
+  [data-network-layout='desktop'] .node-ebiren .node-name { justify-content: center; }
+  [data-network-layout='desktop'] .node-devonair { grid-area: 2 / 4 / 3 / 8; }
+  [data-network-layout='desktop'] .node-brightspire { grid-area: 2 / 10 / 3 / 13; }
+  [data-network-layout='desktop'] :is(.node-devonair, .node-brightspire) .node-name,
+  [data-network-layout='desktop'] :is(.node-devonair, .node-brightspire) a { font-size: 1.65rem; }
+  [data-network-layout='desktop'] .node-mehmet { grid-area: 3 / 1 / 4 / 5; }
+  [data-network-layout='desktop'] .node-murat { grid-area: 3 / 8 / 4 / 13; }
+  [data-network-layout='desktop'] .node-edip { grid-area: 4 / 1 / 5 / 4; }
+  [data-network-layout='desktop'] .node-over { grid-area: 4 / 5 / 5 / 8; }
+  [data-network-layout='desktop'] .node-aelova { grid-area: 4 / 9 / 5 / 11; }
+  [data-network-layout='desktop'] .node-ripple { grid-area: 4 / 11 / 5 / 13; }
+  [data-network-layout='desktop'] .connections [data-layout='mobile'],
+  [data-network-layout='mobile'] .connections [data-layout='desktop'] { display: none; }
+  [data-network-motion] { height: 270svh; }
+  [data-network-motion] .network-sticky { position: sticky; top: 0; height: 100svh; min-height: 0; }
+  [data-network-motion] [data-stage='1'] { --branch: var(--line-1, 1); --node: var(--node-1, 1); }
+  [data-network-motion] [data-stage='2'] { --branch: var(--line-2, 1); --node: var(--node-2, 1); }
+  [data-network-motion] [data-stage='3'] { --branch: var(--line-3, 1); --node: var(--node-3, 1); }
+  [data-network-motion] [data-stage='4'] { --branch: var(--line-4, 1); --node: var(--node-4, 1); }
+  [data-network-motion] .network-node { opacity: var(--node, 1); transform: translateY(calc((1 - var(--node, 1)) * 16px)); }
+  [data-network-motion] .connections path { stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--branch, 1)); }
+  [data-network-motion] .connections path.personal { stroke-dasharray: .025 .018; stroke-dashoffset: 0; opacity: var(--branch, 1); }
+  [data-network-motion] .network-node a { pointer-events: none; }
+  [data-revealed~='1'] [data-stage='1'] a,
+  [data-revealed~='2'] [data-stage='2'] a,
+  [data-revealed~='3'] [data-stage='3'] a,
+  [data-revealed~='4'] [data-stage='4'] a { pointer-events: auto; }
+  /* Keyboard users can always inspect every link without advancing the story. */
+  .network-scroll:focus-within .network-node { opacity: 1; transform: none; }
+  .network-scroll:focus-within .network-composition { opacity: 1; transform: none; }
+  .network-scroll:focus-within .network-node a { pointer-events: auto; }
+  .network-scroll:focus-within .connections path { stroke-dashoffset: 0; opacity: 1; }
+  @media (max-width: 900px) {
+    .network-sticky { padding-block: 1.5rem; }
+    .network-intro { margin-bottom: 1.25rem; gap: .6rem; flex-direction: column; }
+    .network-intro h2 { font-size: 1.5rem; }
+    .network-intro p { font-size: .75rem; max-width: 48ch; }
+    .network-tree ul { margin-left: .4rem; padding-left: 1.05rem; }
+    .network-node { padding-block: .25rem; }
+    .network-node .entity-type { display: none; }
+    .network-node a, .network-node .node-name { font-size: 1.1rem; min-height: 44px; }
+    .network-node.node-ebiren .node-name { font-size: 1.8rem; }
+    .network-node p { font-size: .6875rem; margin: -.2rem 0 0; }
+    .network-key { margin-top: 1rem; font-size: .5625rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .network-composition { opacity: 1; transform: none; }
+    [data-network-motion] { height: auto; }
+    [data-network-motion] .network-sticky { position: static; height: auto; min-height: 100svh; }
+    [data-network-motion] .network-node { opacity: 1; transform: none; }
+    [data-network-motion] .connections path { stroke-dashoffset: 0; opacity: 1; }
+  }
+</style>

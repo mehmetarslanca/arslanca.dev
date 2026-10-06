@@ -1,0 +1,22 @@
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #11100f;
+  --text: #e7e3de;
+  --text-muted: #a39b94;
+  --line: #292624;
+  --accent: #7c2530;
+  --accent-soft: #bb7a83;
+  --light-band: #e5e0da;
+  --light-band-text: #11100f;
+  --light-muted: #615a55;
+  --font-display: 'Inter Tight', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --gutter: clamp(1.25rem, 4.5vw, 5rem);
+  --max-width: 1440px;
+  --section-space: clamp(5rem, 9vw, 9rem);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-reveal: 400ms;
+  --ease: cubic-bezier(.77, 0, .18, 1);
+}

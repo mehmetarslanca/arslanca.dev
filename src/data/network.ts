@@ -11,7 +11,7 @@ interface Entity {
 export const network: Entity[] = [
   { id: 'ebiren', name: 'Ebiren', type: 'Organization', description: 'The umbrella organization.', caption: 'The umbrella organization.', stage: 0 },
   { id: 'devonair', name: 'Devonair', type: 'Organization', parent: 'ebiren', href: 'https://devonair.dev/', description: 'The software, products & systems side of Ebiren.', caption: 'Software, products & systems', stage: 1 },
-  { id: 'brightspire', name: 'Brightspire', type: 'Organization', parent: 'ebiren', description: 'The game development side of Ebiren.', caption: 'Game development', stage: 1 },
+  { id: 'brightspire', name: 'Brightspire', type: 'Organization', parent: 'ebiren', href: 'https://brightspirestudio.com/', description: 'The game development side of Ebiren.', caption: 'Game development', stage: 1 },
   { id: 'mehmet', name: 'Mehmet Arslanca', type: 'Person', parent: 'devonair', href: '/about/', description: 'Part of Devonair. Also builds independently.', caption: 'Devonair / independent builder', stage: 2 },
   { id: 'murat', name: 'Murat Bahadır Kayıhan', type: 'Person', parent: 'devonair', href: 'https://kayihan.dev/', description: 'Part of Devonair. Collaborator & independent builder.', caption: 'Devonair / collaborator', stage: 2 },
   { id: 'edip', name: 'EDIP', type: 'Product', parent: 'mehmet', href: '/products/edip/', description: 'Mehmet’s personal product.', caption: 'Mehmet personal · outside Devonair', stage: 3 },
